@@ -6,17 +6,18 @@ namespace Sereema
 {
     internal class Program
     {
+        private const int ErrorBadArguments = 0xA0;
+        private const int ErrorInvalidCommandLine = 0x667;
+
         private static void Main(string[] args)
         {
-            if (args.Length != 3)
-            {
-                Console.WriteLine("Usage: Sereema.exe credentials_filepath local_filepath remote_filepath");
-                Environment.Exit(-1);
-            }
+            if (args.Length != 2 && args.Length != 3)
+                Fail(
+                    "Usage: Sereema.exe credentials_filepath local_filepath [remote_filepath]",
+                    ErrorInvalidCommandLine);
             var credentialsFilepath = args[0];
             var localFilepath = args[1];
-            // TODO: let remoteFilepath be optional and guessed from localFilepath
-            var remoteFilepath = args[2];
+            var remoteFilepath = args.Length >= 3 ? args[2] : Path.GetFileName(args[1]);
             string remotePrefix = null;
             string accessKeyId = null;
             string secretAccessKey = null;
@@ -27,13 +28,17 @@ namespace Sereema
                 ExtractValueMatchingKey(line, "secret_access_key", ref secretAccessKey);
             }
             if (remotePrefix == null || accessKeyId == null || secretAccessKey == null)
-            {
-                Console.WriteLine("Error: invalid credentials file");
-                Environment.Exit(-1);
-            }
+                Fail("Error: invalid credentials file", ErrorBadArguments);
             S3.UploadFile(
+                // ReSharper disable once PossibleNullReferenceException
                 $"{remotePrefix}{remoteFilepath.Replace("\\", "/")}",
                 File.ReadAllBytes(localFilepath), accessKeyId, secretAccessKey);
+        }
+
+        private static void Fail(string message, int exitCode)
+        {
+            Console.WriteLine(message);
+            Environment.Exit(exitCode);
         }
 
         private static IEnumerable<string> ReadLines(string filePath)
