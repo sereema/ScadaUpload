@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ScadaUpload.sln.iml" filepath="$PROJECT_DIR$/ScadaUpload.sln.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Windfit-Send.sln.iml" filepath="$PROJECT_DIR$/Windfit-Send.sln.iml" />
     </modules>
   </component>
 </project>
