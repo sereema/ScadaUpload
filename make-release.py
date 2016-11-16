@@ -45,7 +45,7 @@ def make_release(version):
     subprocess.check_call(['git', 'tag', '-a', '-m', 'Version {}'.format(version), 'v{}'.format(version)])
     print('Tagged release in git: v{}'.format(version))
     with zipfile.ZipFile('Windfit-Send-{}.zip'.format(version), 'w', compression=zipfile.ZIP_DEFLATED) as zip_file:
-        zip_file.write('Sereema/bin/Release/Windfit-Send.exe')
+        zip_file.write('Sereema/bin/Release/Windfit-Send.exe', 'Windfit-Send.exe')
     print('Created release archive: Windfit-Send-{}.zip'.format(version))
 
 
