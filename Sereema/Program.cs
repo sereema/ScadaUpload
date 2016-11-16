@@ -11,9 +11,10 @@ namespace Sereema
 
         private static void Main(string[] args)
         {
+            var programName = AppDomain.CurrentDomain.FriendlyName;
             if (args.Length != 2 && args.Length != 3)
                 Fail(
-                    "Usage: Sereema.exe credentials_filepath local_filepath [remote_filepath]",
+                    $"Usage: {programName} credentials_filepath local_filepath [remote_filepath]",
                     ErrorInvalidCommandLine);
             var credentialsFilepath = args[0];
             var localFilepath = args[1];

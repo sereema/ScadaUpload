@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("Sereema Scada Upload")]
+[assembly: AssemblyTitle("Windfit Scada Uploader 0.1.0")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Sereema")]
-[assembly: AssemblyProduct("Scada Upload")]
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyProduct("Windfit-Send")]
+[assembly: AssemblyCopyright("Sereema")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

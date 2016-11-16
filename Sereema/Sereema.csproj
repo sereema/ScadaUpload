@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sereema</RootNamespace>
-    <AssemblyName>Sereema</AssemblyName>
+    <AssemblyName>Windfit-Send</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ApplicationIcon>Sereema.ico</ApplicationIcon>
