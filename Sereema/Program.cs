@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 
 namespace Sereema
 {
@@ -11,10 +12,12 @@ namespace Sereema
 
         private static void Main(string[] args)
         {
-            var programName = AppDomain.CurrentDomain.FriendlyName;
+            var version = Assembly.GetEntryAssembly().GetName().Version;
+            var programName = AppDomain.CurrentDomain.FriendlyName.Replace(".exe", "");
             if (args.Length != 2 && args.Length != 3)
                 Fail(
-                    $"Usage: {programName} credentials_filepath local_filepath [remote_filepath]",
+                    $"Usage: {programName}.exe credentials_filepath local_filepath [remote_filepath]\n\n" +
+                    $"{programName} v{version.MajorRevision}.{version.Minor}.{version.Build} by Sereema: https://windfit.sereema.com",
                     ErrorInvalidCommandLine);
             var credentialsFilepath = args[0];
             var localFilepath = args[1];
