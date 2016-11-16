@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import argparse
 import os
 import re
 import subprocess
@@ -37,7 +36,7 @@ def find_version():
 def make_release(version):
     if subprocess.call(['git', 'rev-parse', 'v{}'.format(version)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL) == 0:
         raise ReleaseException('The release number v{} is already tagged in git, please update AssemblyInfo.cs metadata before releasing.'.format(version))
-    if subprocess.check_output(['git', 'status', '--porcelain']) != '':
+    if subprocess.check_output(['git', 'status', '--porcelain']) != b'':
         raise ReleaseException('Your git working copy is not clean, please commit everything before releasing.')
     if not os.path.exists('Sereema/bin/Release/Windfit-Send.exe'):
         raise ReleaseException('The release binary file is missing, please build before releasing.')
