@@ -25,18 +25,26 @@ namespace Sereema
             string remotePrefix = null;
             string accessKeyId = null;
             string secretAccessKey = null;
-            foreach (var line in ReadLines(credentialsFilepath))
+            try
             {
-                ExtractValueMatchingKey(line, "remote_prefix", ref remotePrefix);
-                ExtractValueMatchingKey(line, "access_key_id", ref accessKeyId);
-                ExtractValueMatchingKey(line, "secret_access_key", ref secretAccessKey);
+                foreach (var line in ReadLines(credentialsFilepath))
+                {
+                    ExtractValueMatchingKey(line, "remote_prefix", ref remotePrefix);
+                    ExtractValueMatchingKey(line, "access_key_id", ref accessKeyId);
+                    ExtractValueMatchingKey(line, "secret_access_key", ref secretAccessKey);
+                }
+                if (remotePrefix == null || accessKeyId == null || secretAccessKey == null)
+                    Fail("Error: invalid credentials file", ErrorBadArguments);
+
+                S3.UploadFile(
+                    // ReSharper disable once PossibleNullReferenceException
+                    $"{remotePrefix}{remoteFilepath.Replace("\\", "/")}",
+                    File.ReadAllBytes(localFilepath), accessKeyId, secretAccessKey);
             }
-            if (remotePrefix == null || accessKeyId == null || secretAccessKey == null)
-                Fail("Error: invalid credentials file", ErrorBadArguments);
-            S3.UploadFile(
-                // ReSharper disable once PossibleNullReferenceException
-                $"{remotePrefix}{remoteFilepath.Replace("\\", "/")}",
-                File.ReadAllBytes(localFilepath), accessKeyId, secretAccessKey);
+            catch (Exception exception)
+            {
+                Fail($"Error: {exception.Message}", ErrorBadArguments);
+            }
         }
 
         private static void Fail(string message, int exitCode)
